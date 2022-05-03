@@ -69,6 +69,7 @@ func listFiles(root string) ([]string, error) {
 
 func main() {
 	var testDir = flag.String("d", "test", "Specify test directory")
+	flag.Parse()
 
 	fmt.Println("=== Tiny Expect: Start ===")
 
