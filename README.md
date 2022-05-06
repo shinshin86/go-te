@@ -76,7 +76,12 @@ cd go-te
 go-te -d _example
 ```
 
+## Running Tests
+Tests are performed on code written under the `_example` directory.
 
+```sh
+make test
+```
 
 ## License
 [MIT](https://github.com/shinshin86/go-te/blob/main/LICENSE)
