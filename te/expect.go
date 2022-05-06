@@ -40,7 +40,7 @@ func Expect(i interface{}) func(*Te, interface{}) {
 				DisplaySuccessMessage("Succeeded", 4)
 				t.testSuccessCnt++
 			} else {
-				msg := fmt.Sprintf("Failed! Actual: %s, Expected: %s", strconv.Itoa(actual), strconv.Itoa(expect))
+				msg := fmt.Sprintf("Failed! Actual: %d, Expected: %d", actual, expect)
 				DisplayFailMessage(msg, 4)
 				t.testFailCnt++
 			}
