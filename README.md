@@ -1,4 +1,6 @@
 # (WIP) go-te 💨
+[![CI](https://github.com/shinshin86/go-te/actions/workflows/ci.yml/badge.svg)](https://github.com/shinshin86/go-te/actions/workflows/ci.yml)
+
 te(Tiny Expect) is a tiny test library for go.
 
 ## Note
