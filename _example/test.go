@@ -20,6 +20,36 @@ func main() {
 			toBe(t, 1)
 		})
 
+		It(t, "Expect i is 1.2", func(t *Te) {
+			i := 1.2
+			toBe := Expect(i)
+			toBe(t, 1.2)
+		})
+
+		It(t, "Expect i is 1.23", func(t *Te) {
+			i := 1.23
+			toBe := Expect(i)
+			toBe(t, 1.23)
+		})
+
+		It(t, "Expect i is 1.234", func(t *Te) {
+			i := 1.234
+			toBe := Expect(i)
+			toBe(t, 1.234)
+		})
+
+		It(t, "Expect i is 1.2345", func(t *Te) {
+			i := 1.2345
+			toBe := Expect(i)
+			toBe(t, 1.2345)
+		})
+
+		It(t, "Expect i is 1.23456", func(t *Te) {
+			i := 1.23456
+			toBe := Expect(i)
+			toBe(t, 1.23456)
+		})
+
 		It(t, "Expect s is helloworld", func(t *Te) {
 			s := "helloworld"
 			toBe := Expect(s)
