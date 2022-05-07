@@ -2,6 +2,7 @@ package te
 
 import (
 	"fmt"
+	"reflect"
 	"strconv"
 )
 
@@ -102,6 +103,26 @@ func Expect(i interface{}) func(*Te, interface{}) {
 				t.testFailCnt++
 			}
 		}
+	case []uint8:
+		actual := i.([]uint8)
+
+		return func(t *Te, i2 interface{}) {
+			expect, ok := i2.([]uint8)
+			if ok == false {
+				fmt.Println("Type error")
+				t.exitCode = 1
+			}
+
+			if reflect.DeepEqual(actual, expect) {
+				DisplaySuccessMessage("Succeeded", 4)
+				t.testSuccessCnt++
+			} else {
+				msg := fmt.Sprintf("Failed! Actual: %s, Expected: %s", actual, expect)
+				DisplayFailMessage(msg, 4)
+				t.testFailCnt++
+			}
+		}
+
 	default:
 		return func(t *Te, i2 interface{}) {
 			fmt.Println("ERROR")

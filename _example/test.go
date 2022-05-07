@@ -61,6 +61,18 @@ func main() {
 			toBe := Expect(r)
 			toBe(t, 'a')
 		})
+
+		It(t, "Expect b is abc", func(t *Te) {
+			b := []byte("abc")
+			toBe := Expect(b)
+			toBe(t, []byte("abc"))
+		})
+
+		It(t, "Expect b is abc([]byte{97, 98, 99}", func(t *Te) {
+			b := []byte("abc")
+			toBe := Expect(b)
+			toBe(t, []byte{97, 98, 99})
+		})
 	})
 
 	TeExit(t)
