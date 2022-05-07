@@ -55,6 +55,12 @@ func main() {
 			toBe := Expect(s)
 			toBe(t, "helloworld")
 		})
+
+		It(t, "Expect r is a", func(t *Te) {
+			r := 'a'
+			toBe := Expect(r)
+			toBe(t, 'a')
+		})
 	})
 
 	TeExit(t)

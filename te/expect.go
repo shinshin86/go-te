@@ -83,6 +83,25 @@ func Expect(i interface{}) func(*Te, interface{}) {
 				t.testFailCnt++
 			}
 		}
+	case rune:
+		actual := i.(rune)
+
+		return func(t *Te, i2 interface{}) {
+			expect, ok := i2.(rune)
+			if ok == false {
+				fmt.Println("Type error")
+				t.exitCode = 1
+			}
+
+			if actual == expect {
+				DisplaySuccessMessage("Succeeded", 4)
+				t.testSuccessCnt++
+			} else {
+				msg := fmt.Sprintf("Failed! Actual: %d, Expected: %d", actual, expect)
+				DisplayFailMessage(msg, 4)
+				t.testFailCnt++
+			}
+		}
 	default:
 		return func(t *Te, i2 interface{}) {
 			fmt.Println("ERROR")
