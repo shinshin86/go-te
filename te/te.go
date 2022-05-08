@@ -9,12 +9,13 @@ import (
 )
 
 type Te struct {
-	testCnt        int
-	testSuccessCnt int
-	testFailCnt    int
-	exitCode       int
-	Actual         interface{}
-	ActualType     reflect.Kind
+	testCnt          int
+	testSuccessCnt   int
+	testFailCnt      int
+	exitCode         int
+	CurrentTestName  string
+	CurrentTestValue interface{}
+	CurrentTestType  reflect.Kind
 }
 
 func Init() *Te {
@@ -82,6 +83,7 @@ func Test(t *Te, name string, fn func(t *Te)) {
 
 func test(t *Te, name string, fn func(t *Te)) {
 	t.testCnt++
+	t.CurrentTestName = name
 	title := strconv.Itoa(t.testCnt) + ": " + name
 
 	DisplayTestTitle(title, 2)
