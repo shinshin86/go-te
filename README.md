@@ -40,20 +40,17 @@ func main() {
 	Describe("Minimal sample", func() {
 		It(t, "Expect b is true", func(t *Te) {
 			b := true
-			toBe := Expect(b)
-			toBe(t, true)
+			t.Expect(b).ToBe(true)
 		})
 
 		It(t, "Expect i is 1", func(t *Te) {
 			i := 1
-			toBe := Expect(i)
-			toBe(t, 1)
+			t.Expect(i).ToBe(1)
 		})
 
 		It(t, "Expect s is helloworld", func(t *Te) {
 			s := "helloworld"
-			toBe := Expect(s)
-			toBe(t, "helloworld")
+			t.Expect(s).ToBe("helloworld")
 		})
 	})
 

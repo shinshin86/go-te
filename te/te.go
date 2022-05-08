@@ -3,6 +3,7 @@ package te
 import (
 	"fmt"
 	"os"
+	"reflect"
 	"strconv"
 	"strings"
 )
@@ -12,6 +13,8 @@ type Te struct {
 	testSuccessCnt int
 	testFailCnt    int
 	exitCode       int
+	Actual         interface{}
+	ActualType     reflect.Kind
 }
 
 func Init() *Te {

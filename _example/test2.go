@@ -13,8 +13,7 @@ func main() {
 
 	Describe("Minimal sample 2", func() {
 		It(t, "Expected to be output sum of the two arguments", func(t *Te) {
-			toBe := Expect(add(2, 3))
-			toBe(t, 5)
+			t.Expect(add(2, 3)).ToBe(5)
 		})
 	})
 
