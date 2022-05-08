@@ -11,8 +11,14 @@ func add(x, y int) int {
 func main() {
 	t := Init()
 
-	Describe("Minimal sample 2", func() {
+	Describe("add function test(It)", func() {
 		It(t, "Expected to be output sum of the two arguments", func(t *Te) {
+			t.Expect(add(2, 3)).ToBe(5)
+		})
+	})
+
+	Describe("add function test(Test)", func() {
+		Test(t, "Expected to be output sum of the two arguments", func(t *Te) {
 			t.Expect(add(2, 3)).ToBe(5)
 		})
 	})

@@ -73,6 +73,14 @@ func Describe(name string, fn func()) {
 }
 
 func It(t *Te, name string, fn func(t *Te)) {
+	test(t, name, fn)
+}
+
+func Test(t *Te, name string, fn func(t *Te)) {
+	test(t, name, fn)
+}
+
+func test(t *Te, name string, fn func(t *Te)) {
 	t.testCnt++
 	title := strconv.Itoa(t.testCnt) + ": " + name
 
