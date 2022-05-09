@@ -27,7 +27,7 @@ func Init() *Te {
 	}
 }
 
-func TeExit(t *Te) {
+func (t *Te) Exit() {
 	report(t)
 	os.Exit(t.exitCode)
 }
@@ -68,24 +68,24 @@ func DisplayFailMessage(msg string, space int) {
 	fmt.Printf("\x1b[31m%s\x1b[0m\n", s+msg)
 }
 
-func Describe(name string, fn func()) {
+func (t *Te) Describe(name string, fn func()) {
 	DisplayTestTitle(name, 0)
 	fn()
 }
 
-func It(t *Te, name string, fn func(t *Te)) {
-	test(t, name, fn)
+func (t *Te) It(name string, fn func()) {
+	t.test(name, fn)
 }
 
-func Test(t *Te, name string, fn func(t *Te)) {
-	test(t, name, fn)
+func (t *Te) Test(name string, fn func()) {
+	t.test(name, fn)
 }
 
-func test(t *Te, name string, fn func(t *Te)) {
+func (t *Te) test(name string, fn func()) {
 	t.testCnt++
 	t.CurrentTestName = name
 	title := strconv.Itoa(t.testCnt) + ": " + name
 
 	DisplayTestTitle(title, 2)
-	fn(t)
+	fn()
 }

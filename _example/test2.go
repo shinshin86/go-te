@@ -11,17 +11,17 @@ func add(x, y int) int {
 func main() {
 	t := Init()
 
-	Describe("add function test(It)", func() {
-		It(t, "Expected to be output sum of the two arguments", func(t *Te) {
+	t.Describe("add function test(It)", func() {
+		t.It("Expected to be output sum of the two arguments", func() {
 			t.Expect(add(2, 3)).ToBe(5)
 		})
 	})
 
-	Describe("add function test(Test)", func() {
-		Test(t, "Expected to be output sum of the two arguments", func(t *Te) {
+	t.Describe("add function test(Test)", func() {
+		t.Test("Expected to be output sum of the two arguments", func() {
 			t.Expect(add(2, 3)).ToBe(5)
 		})
 	})
 
-	TeExit(t)
+	t.Exit()
 }

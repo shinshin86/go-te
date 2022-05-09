@@ -38,23 +38,23 @@ func main() {
 	t := Init()
 
 	Describe("Minimal sample", func() {
-		It(t, "Expect b is true", func(t *Te) {
+		t.It("Expect b is true", func() {
 			b := true
 			t.Expect(b).ToBe(true)
 		})
 
-		It(t, "Expect i is 1", func(t *Te) {
+		t.It("Expect i is 1", func() {
 			i := 1
 			t.Expect(i).ToBe(1)
 		})
 
-		It(t, "Expect s is helloworld", func(t *Te) {
+		t.It("Expect s is helloworld", func() {
 			s := "helloworld"
 			t.Expect(s).ToBe("helloworld")
 		})
 	})
 
-	TeExit(t)
+	t.Exit()
 }
 ```
 
