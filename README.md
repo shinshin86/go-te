@@ -37,7 +37,7 @@ import (
 func main() {
 	t := Init()
 
-	Describe("Minimal sample", func() {
+	t.Describe("Minimal sample", func() {
 		t.It("Expect b is true", func() {
 			b := true
 			t.Expect(b).ToBe(true)
@@ -48,7 +48,8 @@ func main() {
 			t.Expect(i).ToBe(1)
 		})
 
-		t.It("Expect s is helloworld", func() {
+		// The name Test is also available. The functionality is the same.
+		t.Test("Expect s is helloworld", func() {
 			s := "helloworld"
 			t.Expect(s).ToBe("helloworld")
 		})
