@@ -62,6 +62,20 @@ func main() {
 			b := []byte("abc")
 			t.Expect(b).ToBe([]byte{97, 98, 99})
 		})
+
+		t.It("Expect a is [1 2]", func() {
+			var a [2]int
+			a[0] = 1
+			a[1] = 2
+			t.Expect(a).ToBe([2]int{1, 2})
+		})
+
+		t.It("Expect a is [Hello World]", func() {
+			var a [2]string
+			a[0] = "Hello"
+			a[1] = "World"
+			t.Expect(a).ToBe([2]string{"Hello", "World"})
+		})
 	})
 
 	t.Exit()

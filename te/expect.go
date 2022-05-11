@@ -150,7 +150,31 @@ func (t *Te) ToBe(i interface{}) {
 				t.testFailCnt++
 			}
 		}
+	case reflect.Array:
+		actual := reflect.ValueOf(t.CurrentTestValue)
+		expect := reflect.ValueOf(i)
 
+		if actual.Len() != expect.Len() {
+			fmt.Println("Error: The number of arrays to be compared does not match.")
+			t.exitCode = 1
+		}
+
+		for idx := 0; idx < actual.Len(); idx++ {
+			actualItem := actual.Index(idx).Interface()
+			expectItem := expect.Index(idx).Interface()
+
+			if !reflect.DeepEqual(actualItem, expectItem) {
+				msg := fmt.Sprintf("Failed!: " + t.CurrentTestName + "\n")
+				msg = msg + fmt.Sprintf("    Actual: %s, Expected: %s", actual, expect)
+				DisplayFailMessage(msg, 4)
+				t.testFailCnt++
+
+				return
+			}
+		}
+
+		DisplaySuccessMessage("Succeeded", 4)
+		t.testSuccessCnt++
 	default:
 		fmt.Printf("ERROR: Not found invalid type. %s\n", t.CurrentTestType)
 		t.exitCode = 1
