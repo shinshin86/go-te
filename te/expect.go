@@ -13,18 +13,28 @@ func (t *Te) Expect(i interface{}) *Te {
 	return t
 }
 
+func (t *Te) notExpectedTypeMsg() {
+	msg := fmt.Sprintf("Error: Not expected type. (value: %v, type: %T)", t.CurrentTestValue, t.CurrentTestValue)
+	DisplayFailMessage(msg, 4)
+}
+
+func notExpectedTypeMsg(i interface{}) {
+	msg := fmt.Sprintf("Error: Not expected type. (value: %v, type: %T)", i, i)
+	DisplayFailMessage(msg, 4)
+}
+
 func (t *Te) ToBe(i interface{}) {
 	switch t.CurrentTestType {
 	case reflect.Bool:
 		actual, ok := t.CurrentTestValue.(bool)
 		if ok == false {
-			fmt.Printf("Error: Not expected type. (value: %v, type: %T)\n", t.CurrentTestValue, t.CurrentTestValue)
+			t.notExpectedTypeMsg()
 			t.exitCode = 1
 		}
 
 		expect, ok := i.(bool)
 		if ok == false {
-			fmt.Printf("Error: Not expected type. (value: %v, type: %T)\n", i, i)
+			notExpectedTypeMsg(i)
 			t.exitCode = 1
 		}
 
@@ -40,13 +50,13 @@ func (t *Te) ToBe(i interface{}) {
 	case reflect.Int:
 		actual, ok := t.CurrentTestValue.(int)
 		if ok == false {
-			fmt.Printf("Error: Not expected type. (value: %v, type: %T)\n", t.CurrentTestValue, t.CurrentTestValue)
+			t.notExpectedTypeMsg()
 			t.exitCode = 1
 		}
 
 		expect, ok := i.(int)
 		if ok == false {
-			fmt.Printf("Error: Not expected type. (value: %v, type: %T)\n", i, i)
+			notExpectedTypeMsg(i)
 			t.exitCode = 1
 		}
 
@@ -62,13 +72,13 @@ func (t *Te) ToBe(i interface{}) {
 	case reflect.Float64:
 		actual, ok := t.CurrentTestValue.(float64)
 		if ok == false {
-			fmt.Printf("Error: Not expected type. (value: %v, type: %T)\n", t.CurrentTestValue, t.CurrentTestValue)
+			t.notExpectedTypeMsg()
 			t.exitCode = 1
 		}
 
 		expect, ok := i.(float64)
 		if ok == false {
-			fmt.Printf("Error: Not expected type. (value: %v, type: %T)\n", i, i)
+			notExpectedTypeMsg(i)
 			t.exitCode = 1
 		}
 
@@ -84,13 +94,13 @@ func (t *Te) ToBe(i interface{}) {
 	case reflect.String:
 		actual, ok := t.CurrentTestValue.(string)
 		if ok == false {
-			fmt.Printf("Error: Not expected type. (value: %v, type: %T)\n", t.CurrentTestValue, t.CurrentTestValue)
+			t.notExpectedTypeMsg()
 			t.exitCode = 1
 		}
 
 		expect, ok := i.(string)
 		if ok == false {
-			fmt.Printf("Error: Not expected type. (value: %v, type: %T)\n", i, i)
+			notExpectedTypeMsg(i)
 			t.exitCode = 1
 		}
 
@@ -106,13 +116,13 @@ func (t *Te) ToBe(i interface{}) {
 	case reflect.Int32: // rune
 		actual, ok := t.CurrentTestValue.(rune)
 		if ok == false {
-			fmt.Printf("Error: Not expected type. (value: %v, type: %T)\n", t.CurrentTestValue, t.CurrentTestValue)
+			t.notExpectedTypeMsg()
 			t.exitCode = 1
 		}
 
 		expect, ok := i.(rune)
 		if ok == false {
-			fmt.Printf("Error: Not expected type. (value: %v, type: %T)\n", i, i)
+			notExpectedTypeMsg(i)
 			t.exitCode = 1
 		}
 
@@ -130,13 +140,13 @@ func (t *Te) ToBe(i interface{}) {
 		case []uint8:
 			actual, ok := t.CurrentTestValue.([]uint8)
 			if ok == false {
-				fmt.Printf("Error: Not expected type. (value: %v, type: %T)\n", t.CurrentTestValue, t.CurrentTestValue)
+				t.notExpectedTypeMsg()
 				t.exitCode = 1
 			}
 
 			expect, ok := i.([]uint8)
 			if ok == false {
-				fmt.Printf("Error: Not expected type. (value: %v, type: %T)\n", i, i)
+				notExpectedTypeMsg(i)
 				t.exitCode = 1
 			}
 
