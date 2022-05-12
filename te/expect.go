@@ -185,6 +185,19 @@ func (t *Te) ToBe(i interface{}) {
 
 		DisplaySuccessMessage("Succeeded", 4)
 		t.testSuccessCnt++
+	case reflect.Pointer:
+		actual := reflect.ValueOf(t.CurrentTestValue)
+		expect := reflect.ValueOf(i)
+
+		if reflect.DeepEqual(actual, expect) {
+			DisplaySuccessMessage("Succeeded", 4)
+			t.testSuccessCnt++
+		} else {
+			msg := fmt.Sprintf("Failed!: " + t.CurrentTestName + "\n")
+			msg = msg + fmt.Sprintf("    Actual: %s, Expected: %s", actual, expect)
+			DisplayFailMessage(msg, 4)
+			t.testFailCnt++
+		}
 	default:
 		fmt.Printf("ERROR: Not found invalid type. %s\n", t.CurrentTestType)
 		t.exitCode = 1

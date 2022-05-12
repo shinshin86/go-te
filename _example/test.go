@@ -76,6 +76,13 @@ func main() {
 			a[1] = "World"
 			t.Expect(a).ToBe([2]string{"Hello", "World"})
 		})
+
+		t.It("Expect p is ", func() {
+			i := 123
+			p := &i
+			p2 := &i
+			t.Expect(p).ToBe(p2)
+		})
 	})
 
 	t.Exit()
