@@ -89,6 +89,10 @@ func main() {
 
 	for _, file := range files {
 		// TODO: Ensure that only test files are retrieved.
+		if filepath.Ext(file) != ".go" {
+			continue
+		}
+
 		t.testFiles = append(t.testFiles, file)
 		t.fileCnt++
 	}
