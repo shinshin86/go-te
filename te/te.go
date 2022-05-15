@@ -14,6 +14,8 @@ type Te struct {
 	CurrentTestName  string
 	CurrentTestValue interface{}
 	CurrentTestType  reflect.Kind
+	beforeAll        func()
+	afterAll         func()
 }
 
 func Init() *Te {
@@ -47,7 +49,16 @@ func report(t *Te) {
 
 func (t *Te) Describe(name string, fn func()) {
 	DisplayTestTitle(name, 0)
+
+	if t.beforeAll != nil {
+		t.beforeAll()
+	}
+
 	fn()
+
+	if t.afterAll != nil {
+		t.afterAll()
+	}
 }
 
 func (t *Te) It(name string, fn func()) {
@@ -65,4 +76,12 @@ func (t *Te) test(name string, fn func()) {
 
 	DisplayTestTitle(title, 2)
 	fn()
+}
+
+func (t *Te) BeforeAll(fn func()) {
+	t.beforeAll = fn
+}
+
+func (t *Te) AfterAll(fn func()) {
+	t.afterAll = fn
 }
