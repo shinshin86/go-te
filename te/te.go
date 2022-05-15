@@ -16,6 +16,8 @@ type Te struct {
 	CurrentTestType  reflect.Kind
 	beforeAll        func()
 	afterAll         func()
+	beforeEach       func()
+	afterEach        func()
 }
 
 func Init() *Te {
@@ -75,7 +77,16 @@ func (t *Te) test(name string, fn func()) {
 	title := strconv.Itoa(t.testCnt) + ": " + name
 
 	DisplayTestTitle(title, 2)
+
+	if t.beforeEach != nil {
+		t.beforeEach()
+	}
+
 	fn()
+
+	if t.afterEach != nil {
+		t.afterEach()
+	}
 }
 
 func (t *Te) BeforeAll(fn func()) {
@@ -84,4 +95,12 @@ func (t *Te) BeforeAll(fn func()) {
 
 func (t *Te) AfterAll(fn func()) {
 	t.afterAll = fn
+}
+
+func (t *Te) BeforeEach(fn func()) {
+	t.beforeEach = fn
+}
+
+func (t *Te) AfterEach(fn func()) {
+	t.afterEach = fn
 }
