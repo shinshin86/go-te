@@ -102,9 +102,10 @@ func main() {
 	for _, f := range t.testFiles {
 		DisplayTestFile(f, 0)
 
-		out, err := exec.Command("go", "run", f).Output()
+		out, err := exec.Command("go", "run", f).CombinedOutput()
 		if err != nil {
 			t.fileFailCnt++
+			fmt.Println(err)
 		} else {
 			t.fileSuccessCnt++
 		}
