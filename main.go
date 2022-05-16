@@ -77,9 +77,17 @@ func listGoFiles(root string) ([]string, error) {
 
 func readConfig() *config {
 	var cfg config
+	cfgDefaultPath := "te.config.json"
 
-	b, err := ioutil.ReadFile("te.config.json")
-	if err == nil {
+	var cfgPath = flag.String("c", cfgDefaultPath, "Specify config file path")
+
+	flag.Parse()
+
+	b, err := ioutil.ReadFile(*cfgPath)
+	if err != nil && *cfgPath != cfgDefaultPath {
+		fmt.Println("=== Tiny Expect: read config file error ===")
+		fmt.Println(err)
+	} else {
 		json.Unmarshal(b, &cfg)
 	}
 
@@ -88,8 +96,6 @@ func readConfig() *config {
 
 func main() {
 	var testDir = flag.String("d", "test", "Specify test directory")
-
-	flag.Parse()
 
 	cfg := readConfig()
 
@@ -115,6 +121,8 @@ func main() {
 			t.fileCnt++
 		}
 	} else {
+		flag.Parse()
+
 		files, err := listGoFiles(*testDir)
 
 		if err != nil {
