@@ -132,6 +132,28 @@ func main() {
 }
 ```
 
+## Command line options
+
+```sh
+go-te --help
+
+#  -c string
+#    	Specify config file path (default "te.config.json")
+#  -d string
+#    	Specify test directory (default "test")
+```
+
+## Config file
+You can create a `te.config.json` file and put runtime test options there.
+
+```json
+{
+    "testMatch": ["_example/*.go", "_example/sub/*.go"]
+}
+```
+
+ - `testMatch` - You can specify the path to the test file.
+
 ## Examples
 
 You can also try the example code for this project.  
