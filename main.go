@@ -2,8 +2,10 @@
 package main
 
 import (
+	"encoding/json"
 	"flag"
 	"fmt"
+	"io/ioutil"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -18,6 +20,10 @@ type TeSummary struct {
 	fileSuccessCnt int
 	fileFailCnt    int
 	exitCode       int
+}
+
+type config struct {
+	TestMatch []string `json:testMath`
 }
 
 func runnerExit(t *TeSummary) {
@@ -45,7 +51,7 @@ func report(t *TeSummary) {
 	}
 }
 
-func listFiles(root string) ([]string, error) {
+func listGoFiles(root string) ([]string, error) {
 	var files []string
 
 	err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
@@ -54,7 +60,9 @@ func listFiles(root string) ([]string, error) {
 		}
 
 		if !info.IsDir() {
-			files = append(files, path)
+			if filepath.Ext(info.Name()) == ".go" {
+				files = append(files, path)
+			}
 		}
 
 		return nil
@@ -67,9 +75,23 @@ func listFiles(root string) ([]string, error) {
 	return files, nil
 }
 
+func readConfig() *config {
+	var cfg config
+
+	b, err := ioutil.ReadFile("te.config.json")
+	if err == nil {
+		json.Unmarshal(b, &cfg)
+	}
+
+	return &cfg
+}
+
 func main() {
 	var testDir = flag.String("d", "test", "Specify test directory")
+
 	flag.Parse()
+
+	cfg := readConfig()
 
 	fmt.Println("=== Tiny Expect: Start ===")
 
@@ -80,21 +102,30 @@ func main() {
 		exitCode:       0,
 	}
 
-	files, err := listFiles(*testDir)
+	if cfg.TestMatch != nil {
+		files, err := filepath.Glob(cfg.TestMatch[0])
 
-	if err != nil {
-		fmt.Fprintln(os.Stderr, err)
-		os.Exit(1)
-	}
-
-	for _, file := range files {
-		// TODO: Ensure that only test files are retrieved.
-		if filepath.Ext(file) != ".go" {
-			continue
+		if err != nil {
+			fmt.Fprintln(os.Stderr, err)
+			os.Exit(1)
 		}
 
-		t.testFiles = append(t.testFiles, file)
-		t.fileCnt++
+		for _, file := range files {
+			t.testFiles = append(t.testFiles, file)
+			t.fileCnt++
+		}
+	} else {
+		files, err := listGoFiles(*testDir)
+
+		if err != nil {
+			fmt.Fprintln(os.Stderr, err)
+			os.Exit(1)
+		}
+
+		for _, file := range files {
+			t.testFiles = append(t.testFiles, file)
+			t.fileCnt++
+		}
 	}
 
 	testFilesMsg := "Found " + strconv.Itoa(t.fileCnt) + " test files"
