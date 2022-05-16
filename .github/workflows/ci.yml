@@ -16,5 +16,7 @@ jobs:
         uses: actions/setup-go@v3
         with:
           go-version: 1.x
-      - name: Test
+      - name: Test (Specify test directory)
         run: make test
+      - name: Test (Specify config file)
+        run: make cfgtest

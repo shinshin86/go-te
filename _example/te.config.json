@@ -1,0 +1,3 @@
+{
+    "testMatch": ["_example/*.go", "_example/sub/*.go"]
+}
