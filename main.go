@@ -51,30 +51,6 @@ func report(t *TeSummary) {
 	}
 }
 
-func listGoFiles(root string) ([]string, error) {
-	var files []string
-
-	err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
-		if err != nil {
-			return err
-		}
-
-		if !info.IsDir() {
-			if filepath.Ext(info.Name()) == ".go" {
-				files = append(files, path)
-			}
-		}
-
-		return nil
-	})
-
-	if err != nil {
-		return nil, err
-	}
-
-	return files, nil
-}
-
 func readConfig() *config {
 	var cfg config
 	cfgDefaultPath := "te.config.json"
@@ -123,7 +99,7 @@ func main() {
 	} else {
 		flag.Parse()
 
-		files, err := listGoFiles(*testDir)
+		files, err := filepath.Glob(filepath.Join(*testDir, "*.go"))
 
 		if err != nil {
 			fmt.Fprintln(os.Stderr, err)
