@@ -85,11 +85,17 @@ func main() {
 	}
 
 	if cfg.TestMatch != nil {
-		files, err := filepath.Glob(cfg.TestMatch[0])
+		var files []string
 
-		if err != nil {
-			fmt.Fprintln(os.Stderr, err)
-			os.Exit(1)
+		for _, tm := range cfg.TestMatch {
+			f, err := filepath.Glob(tm)
+
+			if err != nil {
+				fmt.Fprintln(os.Stderr, err)
+				os.Exit(1)
+			}
+
+			files = append(files, f...)
 		}
 
 		for _, file := range files {
