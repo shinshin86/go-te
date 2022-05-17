@@ -23,7 +23,7 @@ type TeSummary struct {
 }
 
 type config struct {
-	TestMatch []string `json:testMath`
+	TestMatch []string
 }
 
 func runnerExit(t *TeSummary) {
