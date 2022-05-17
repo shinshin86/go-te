@@ -23,6 +23,36 @@ func notExpectedTypeMsg(i interface{}) {
 	DisplayFailMessage(msg, 4)
 }
 
+func (t *Te) NotToBe(i interface{}) {
+	switch t.CurrentTestType {
+	case reflect.Bool:
+		actual, ok := t.CurrentTestValue.(bool)
+		if ok == false {
+			t.notExpectedTypeMsg()
+			t.exitCode = 1
+		}
+
+		expect, ok := i.(bool)
+		if ok == false {
+			notExpectedTypeMsg(i)
+			t.exitCode = 1
+		}
+
+		if actual != expect {
+			DisplaySuccessMessage("Succeeded", 4)
+			t.testSuccessCnt++
+		} else {
+			msg := fmt.Sprintf("Failed!: " + t.CurrentTestName + "\n")
+			msg = msg + fmt.Sprintf("    Actual: %s, Expected: %s", strconv.FormatBool(actual), strconv.FormatBool(expect))
+			DisplayFailMessage(msg, 4)
+			t.testFailCnt++
+		}
+	default:
+		fmt.Printf("ERROR: Not found invalid type. %s\n", t.CurrentTestType)
+		t.exitCode = 1
+	}
+}
+
 func (t *Te) ToBe(i interface{}) {
 	switch t.CurrentTestType {
 	case reflect.Bool:
