@@ -7,7 +7,7 @@ import (
 func main() {
 	t := Init()
 
-	t.Describe("Expoect not to be sample", func() {
+	t.Describe("Expoect not to be test", func() {
 		t.It("Expect b is not true", func() {
 			b := true
 			t.Expect(b).NotToBe(false)
