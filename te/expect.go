@@ -71,7 +71,8 @@ func (t *Te) NotToBe(i interface{}) {
 			t.testFailCnt++
 		}
 	default:
-		fmt.Printf("ERROR: Not found invalid type. %s\n", t.CurrentTestType)
+		msg := fmt.Sprintf("ERROR: Not found invalid type. %s\n", t.CurrentTestType)
+		DisplayFailMessage(msg, 4)
 		t.exitCode = 1
 	}
 }
@@ -232,7 +233,8 @@ func (t *Te) ToBe(i interface{}) {
 			t.testFailCnt++
 		}
 	default:
-		fmt.Printf("ERROR: Not found invalid type. %s\n", t.CurrentTestType)
+		msg := fmt.Sprintf("ERROR: Not found invalid type. %s\n", t.CurrentTestType)
+		DisplayFailMessage(msg, 4)
 		t.exitCode = 1
 	}
 }
