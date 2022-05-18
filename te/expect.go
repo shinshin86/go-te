@@ -44,7 +44,7 @@ func assertNotEqual[T CompareType](actual, expect T, testName string) bool {
 		return true
 	} else {
 		msg := fmt.Sprintf("Failed!: " + testName + "\n")
-		msg = msg + fmt.Sprintf("    Actual: %v, Expected: %v", actual, expect)
+		msg = msg + fmt.Sprintf("    Actual: %v, Not expected: %v", actual, expect)
 		DisplayFailMessage(msg, 4)
 		return false
 	}
