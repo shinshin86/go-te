@@ -3,7 +3,6 @@ package te
 import (
 	"fmt"
 	"reflect"
-	"strconv"
 )
 
 func (t *Te) Expect(i interface{}) *Te {
@@ -23,6 +22,34 @@ func notExpectedTypeMsg(i interface{}) {
 	DisplayFailMessage(msg, 4)
 }
 
+type CompareType interface {
+	bool | int | float64 | string | rune
+}
+
+func assertEqual[T CompareType](actual, expect T, testName string) bool {
+	if actual == expect {
+		DisplaySuccessMessage("Succeeded", 4)
+		return true
+	} else {
+		msg := fmt.Sprintf("Failed!: " + testName + "\n")
+		msg = msg + fmt.Sprintf("    Actual: %v, Expected: %v", actual, expect)
+		DisplayFailMessage(msg, 4)
+		return false
+	}
+}
+
+func assertNotEqual[T CompareType](actual, expect T, testName string) bool {
+	if actual != expect {
+		DisplaySuccessMessage("Succeeded", 4)
+		return true
+	} else {
+		msg := fmt.Sprintf("Failed!: " + testName + "\n")
+		msg = msg + fmt.Sprintf("    Actual: %v, Expected: %v", actual, expect)
+		DisplayFailMessage(msg, 4)
+		return false
+	}
+}
+
 func (t *Te) NotToBe(i interface{}) {
 	switch t.CurrentTestType {
 	case reflect.Bool:
@@ -38,13 +65,9 @@ func (t *Te) NotToBe(i interface{}) {
 			t.exitCode = 1
 		}
 
-		if actual != expect {
-			DisplaySuccessMessage("Succeeded", 4)
+		if assertNotEqual(actual, expect, t.CurrentTestName) {
 			t.testSuccessCnt++
 		} else {
-			msg := fmt.Sprintf("Failed!: " + t.CurrentTestName + "\n")
-			msg = msg + fmt.Sprintf("    Actual: %s, Expected: %s", strconv.FormatBool(actual), strconv.FormatBool(expect))
-			DisplayFailMessage(msg, 4)
 			t.testFailCnt++
 		}
 	default:
@@ -68,13 +91,9 @@ func (t *Te) ToBe(i interface{}) {
 			t.exitCode = 1
 		}
 
-		if actual == expect {
-			DisplaySuccessMessage("Succeeded", 4)
+		if assertEqual(actual, expect, t.CurrentTestName) {
 			t.testSuccessCnt++
 		} else {
-			msg := fmt.Sprintf("Failed!: " + t.CurrentTestName + "\n")
-			msg = msg + fmt.Sprintf("    Actual: %s, Expected: %s", strconv.FormatBool(actual), strconv.FormatBool(expect))
-			DisplayFailMessage(msg, 4)
 			t.testFailCnt++
 		}
 	case reflect.Int:
@@ -90,13 +109,9 @@ func (t *Te) ToBe(i interface{}) {
 			t.exitCode = 1
 		}
 
-		if actual == expect {
-			DisplaySuccessMessage("Succeeded", 4)
+		if assertEqual(actual, expect, t.CurrentTestName) {
 			t.testSuccessCnt++
 		} else {
-			msg := fmt.Sprintf("Failed!: " + t.CurrentTestName + "\n")
-			msg = msg + fmt.Sprintf("    Actual: %d, Expected: %d", actual, expect)
-			DisplayFailMessage(msg, 4)
 			t.testFailCnt++
 		}
 	case reflect.Float64:
@@ -112,13 +127,9 @@ func (t *Te) ToBe(i interface{}) {
 			t.exitCode = 1
 		}
 
-		if actual == expect {
-			DisplaySuccessMessage("Succeeded", 4)
+		if assertEqual(actual, expect, t.CurrentTestName) {
 			t.testSuccessCnt++
 		} else {
-			msg := fmt.Sprintf("Failed!: " + t.CurrentTestName + "\n")
-			msg = msg + fmt.Sprintf("    Actual: %f, Expected: %f", actual, expect)
-			DisplayFailMessage(msg, 4)
 			t.testFailCnt++
 		}
 	case reflect.String:
@@ -134,13 +145,9 @@ func (t *Te) ToBe(i interface{}) {
 			t.exitCode = 1
 		}
 
-		if actual == expect {
-			DisplaySuccessMessage("Succeeded", 4)
+		if assertEqual(actual, expect, t.CurrentTestName) {
 			t.testSuccessCnt++
 		} else {
-			msg := fmt.Sprintf("Failed!: " + t.CurrentTestName + "\n")
-			msg = msg + fmt.Sprintf("    Actual: %s, Expected: %s", actual, expect)
-			DisplayFailMessage(msg, 4)
 			t.testFailCnt++
 		}
 	case reflect.Int32: // rune
@@ -156,13 +163,9 @@ func (t *Te) ToBe(i interface{}) {
 			t.exitCode = 1
 		}
 
-		if actual == expect {
-			DisplaySuccessMessage("Succeeded", 4)
+		if assertEqual(actual, expect, t.CurrentTestName) {
 			t.testSuccessCnt++
 		} else {
-			msg := fmt.Sprintf("Failed!: " + t.CurrentTestName + "\n")
-			msg = msg + fmt.Sprintf("    Actual: %d, Expected: %d", actual, expect)
-			DisplayFailMessage(msg, 4)
 			t.testFailCnt++
 		}
 	case reflect.Slice:
