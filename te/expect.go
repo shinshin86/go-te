@@ -26,8 +26,24 @@ type CompareType interface {
 	bool | int | float64 | string | rune
 }
 
+type CompareArrayType interface {
+	[]uint8 | []string
+}
+
 func assertEqual[T CompareType](actual, expect T, testName string) bool {
 	if actual == expect {
+		DisplaySuccessMessage("Succeeded", 4)
+		return true
+	} else {
+		msg := fmt.Sprintf("Failed!: " + testName + "\n")
+		msg = msg + fmt.Sprintf("    Actual: %v, Expected: %v", actual, expect)
+		DisplayFailMessage(msg, 4)
+		return false
+	}
+}
+
+func assertDeepEqual[T CompareArrayType](actual, expect T, testName string) bool {
+	if reflect.DeepEqual(actual, expect) {
 		DisplaySuccessMessage("Succeeded", 4)
 		return true
 	} else {
@@ -184,13 +200,9 @@ func (t *Te) ToBe(i interface{}) {
 				t.exitCode = 1
 			}
 
-			if reflect.DeepEqual(actual, expect) {
-				DisplaySuccessMessage("Succeeded", 4)
+			if assertDeepEqual(actual, expect, t.CurrentTestName) {
 				t.testSuccessCnt++
 			} else {
-				msg := fmt.Sprintf("Failed!: " + t.CurrentTestName + "\n")
-				msg = msg + fmt.Sprintf("    Actual: %s, Expected: %s", actual, expect)
-				DisplayFailMessage(msg, 4)
 				t.testFailCnt++
 			}
 		}
@@ -199,7 +211,8 @@ func (t *Te) ToBe(i interface{}) {
 		expect := reflect.ValueOf(i)
 
 		if actual.Len() != expect.Len() {
-			fmt.Println("Error: The number of arrays to be compared does not match.")
+			msg := fmt.Sprintf("Error: The number of arrays to be compared does not match.\n")
+			DisplayFailMessage(msg, 4)
 			t.exitCode = 1
 		}
 
@@ -209,11 +222,9 @@ func (t *Te) ToBe(i interface{}) {
 
 			if !reflect.DeepEqual(actualItem, expectItem) {
 				msg := fmt.Sprintf("Failed!: " + t.CurrentTestName + "\n")
-				msg = msg + fmt.Sprintf("    Actual: %s, Expected: %s", actual, expect)
+				msg = msg + fmt.Sprintf("    Actual: %v, Expected: %v", actual, expect)
 				DisplayFailMessage(msg, 4)
 				t.testFailCnt++
-
-				return
 			}
 		}
 
