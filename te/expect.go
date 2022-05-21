@@ -5,6 +5,14 @@ import (
 	"reflect"
 )
 
+type CompareType interface {
+	bool | int | float64 | string | rune
+}
+
+type CompareArrayType interface {
+	[]uint8 | []string
+}
+
 func (t *Te) Expect(i interface{}) *Te {
 	v := reflect.ValueOf(i)
 	t.CurrentTestType = v.Kind()
@@ -20,14 +28,6 @@ func (t *Te) notExpectedTypeMsg() {
 func notExpectedTypeMsg(i interface{}) {
 	msg := fmt.Sprintf("Error: Not expected type. (value: %v, type: %T)", i, i)
 	DisplayFailMessage(msg, 4)
-}
-
-type CompareType interface {
-	bool | int | float64 | string | rune
-}
-
-type CompareArrayType interface {
-	[]uint8 | []string
 }
 
 func assertEqual[T CompareType](actual, expect T, testName string) bool {
