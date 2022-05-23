@@ -149,10 +149,12 @@ func main() {
 ```sh
 go-te --help
 
-#  -c string
-#    	Specify config file path (default "te.config.json")
-#  -d string
-#    	Specify test directory (default "test")
+# -c string
+#   	Specify config file path (default "te.config.json")
+# -d string
+#   	Specify test directory (default "test")
+# -m string
+#   	Specify match files (default "*.go")
 ```
 
 ## Config file

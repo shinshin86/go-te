@@ -72,6 +72,7 @@ func readConfig() *config {
 
 func main() {
 	var testDir = flag.String("d", "test", "Specify test directory")
+	var matchFiles = flag.String("m", "*.go", "Specify match files")
 
 	cfg := readConfig()
 
@@ -103,9 +104,7 @@ func main() {
 			t.fileCnt++
 		}
 	} else {
-		flag.Parse()
-
-		files, err := filepath.Glob(filepath.Join(*testDir, "*.go"))
+		files, err := filepath.Glob(filepath.Join(*testDir, *matchFiles))
 
 		if err != nil {
 			fmt.Fprintln(os.Stderr, err)
