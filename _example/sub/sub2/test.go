@@ -7,7 +7,7 @@ import (
 func main() {
 	t := Init()
 
-	t.Describe("Minimal sample (sub dir)", func() {
+	t.Describe("Minimal sample (sub2 dir)", func() {
 		t.It("Expect b is true", func() {
 			b := true
 			t.Expect(b).ToBe(true)
