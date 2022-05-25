@@ -10,6 +10,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"strconv"
+	"strings"
 
 	. "github.com/shinshin86/go-te/te"
 )
@@ -70,6 +71,15 @@ func readConfig() *config {
 	return &cfg
 }
 
+func validateFileName(fp string) {
+	name := filepath.Base(fp)
+	if strings.HasSuffix(name, "_test.go") {
+		msg := fmt.Sprintf("=== Tiny Expect: Error! An invalid file name is used (%s). File name `_test.go` is not available in go-te. ===\n", name)
+		DisplayFailMessage(msg, 0)
+		os.Exit(1)
+	}
+}
+
 func main() {
 	var testDir = flag.String("d", "test", "Specify test directory")
 	var matchFiles = flag.String("m", "*.go", "Specify match files")
@@ -100,6 +110,7 @@ func main() {
 		}
 
 		for _, file := range files {
+			validateFileName(file)
 			t.testFiles = append(t.testFiles, file)
 			t.fileCnt++
 		}
@@ -112,6 +123,7 @@ func main() {
 		}
 
 		for _, file := range files {
+			validateFileName(file)
 			t.testFiles = append(t.testFiles, file)
 			t.fileCnt++
 		}

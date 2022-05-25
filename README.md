@@ -168,6 +168,10 @@ You can create a `te.config.json` file and put runtime test options there.
 
  - `testMatch` - You can specify the path to the test file.
 
+## About Test File Names
+There are no specific rules about files for testing in `go-te`.
+However, as a specification of go, files with `_test.go` such as `foo_test.go` cannot be used.
+
 ## Examples
 
 You can also try the example code for this project.  
