@@ -10,7 +10,8 @@ te is not recommended for use, although I have using it myself in very limited c
 It also does not have all the features needed for testing, so please use it for fun only.
 
 ## Install
-Please install it to perform the test with the command `go-te`.
+Please install it to perform the test with the command `go-te`.  
+(`go-te` uses generics and should be used with `1.18` or later versions of Go.)
 
 ```sh
 go install github.com/shinshin86/go-te@latest
